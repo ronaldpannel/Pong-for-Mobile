@@ -20,14 +20,13 @@ body {
   max-height: 100%;
   touch-action: none;
 }
-.timer{
-  color:white ;
+.timer {
+  color: white;
   font-size: 20px;
   position: relative;
   text-align: center;
   padding-top: 10px;
   z-index: 100;
-
 }
 
 .canvas1 {
@@ -41,4 +40,25 @@ body {
   max-width: 100%;
   max-height: 100%;
   z-index: 40;
+}
+.startBtn {
+  outline: none;
+  background-color: rgb(132, 96, 6);
+  position: absolute;
+  top: 95%;
+  left: 58%;
+  transform: translate(-95%, -58%);
+  border: 1px solid white;
+  border-radius: 8px;
+  color: white;
+  font-size: 20px;
+  width: 150px;
+  height: 25px;
+  z-index: 100;
+  cursor: pointer;
+}
+.startBtn:hover {
+  color: midnightblue;
+  background-color: rgb(243, 205, 110);
+  border: 1px solid midnightblue;
 }

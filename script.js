@@ -114,7 +114,8 @@ class Paddle {
 }
 const ball = new Ball();
 const computer = new Paddle(25, canvas.height / 2, 0);
-const player = new Paddle(canvas.width - 40, canvas.height / 2 - 50, 0);
+const player = new Paddle(canvas.width - 140, canvas.height / 2 - 50, 0);
+
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -150,6 +151,8 @@ function animate() {
 
 document.addEventListener("pointermove", (e) => {
   e.preventDefault();
-  mousePos = e.y;
+  mousePos = e.offsetY;
 });
+
+
 animate();

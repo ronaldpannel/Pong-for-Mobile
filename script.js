@@ -150,6 +150,7 @@ function animate() {
 }
 
 document.addEventListener("pointermove", (e) => {
+  e.preventDefault();
   mousePos = e.offsetY;
 });
 animate();

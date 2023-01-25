@@ -2,12 +2,18 @@
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
-canvas.width = 1024;
-canvas.height = 576;
+const startBtn = document.getElementById("startBtn");
+const gameOverMessage = document.getElementById("gameOverMess");
+const achievedTime = document.getElementById("timeScore");
+
+canvas.width = 667;
+canvas.height = 375;
 let mousePos;
 let timerValue = 1;
 let gameSpeed = 2;
 let time;
+let animateId;
+let hits = 0
 //game timer
 function increaseTimer() {
   if (timerValue > 0) {
@@ -41,9 +47,9 @@ class Ball {
     ctx.fill();
   }
   edges() {
-    if (this.x + this.r >= canvas.width || this.x - this.r <= 0) {
-      this.speedX *= -1;
-    }
+    // if (this.x + this.r >= canvas.width || this.x - this.r <= 0) {
+    //   this.speedX *= -1;
+    // }
     if (this.y + this.r >= canvas.height || this.y - this.r <= 0) {
       this.speedY *= -1;
     }
@@ -82,7 +88,6 @@ class Ball {
     }
   }
 }
-console.log(Math.random() * 1 + -2);
 class Paddle {
   constructor(x, y, speed) {
     this.x = x;
@@ -114,7 +119,7 @@ class Paddle {
 }
 const ball = new Ball();
 const computer = new Paddle(25, canvas.height / 2, 0);
-const player = new Paddle(canvas.width - 140, canvas.height / 2 - 50, 0);
+const player = new Paddle(canvas.width - 50, canvas.height / 2 - 50, 0);
 
 
 function animate() {
@@ -138,21 +143,38 @@ function animate() {
   }
 
   //ball player paddle collision
+  hit = true
   if (
     ball.x + ball.speedX >= player.x &&
     ball.y + ball.speedY >= player.y &&
-    ball.y + ball.speedY <= player.y + player.height
+    ball.y + ball.speedY <= player.y + player.height && hit
   ) {
     ball.speedX *= -1;
+   
   }
-
-  requestAnimationFrame(animate);
+ 
+  animateId = requestAnimationFrame(animate)
+  gameOver()
 }
+animate()
+
+function gameOver() {
+  if (ball.x + ball.speedX > canvas.width + ball.r) {
+    increaseTimer = false
+    achievedTime.innerHTML = time
+    gameOverMessage.classList.add('active')
+    startBtn.classList.add("active");
+    cancelAnimationFrame(animateId);
+  }
+}
+
+
+startBtn.addEventListener("click", function () {
+ location.reload()
+});
 
 document.addEventListener("pointermove", (e) => {
   e.preventDefault();
   mousePos = e.offsetY;
 });
 
-
-animate();

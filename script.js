@@ -13,7 +13,7 @@ let timerValue = 1;
 let gameSpeed = 2;
 let time;
 let animateId;
-let hits = 0
+let hits = 0;
 //game timer
 function increaseTimer() {
   if (timerValue > 0) {
@@ -82,9 +82,12 @@ class Ball {
     } else if (time >= 70 && time < 80) {
       this.x += this.speedX * 9;
       this.y += this.speedY * 9;
-    } else {
+    } else if (time >= 80 && time < 90) {
       this.x += this.speedX * 10;
       this.y += this.speedY * 10;
+    } else {
+      this.x += this.speedX * 11;
+      this.y += this.speedY * 11;
     }
   }
 }
@@ -121,7 +124,6 @@ const ball = new Ball();
 const computer = new Paddle(25, canvas.height / 2, 0);
 const player = new Paddle(canvas.width - 50, canvas.height / 2 - 50, 0);
 
-
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "green";
@@ -143,38 +145,36 @@ function animate() {
   }
 
   //ball player paddle collision
-  hit = true
+  hit = true;
   if (
     ball.x + ball.speedX >= player.x &&
     ball.y + ball.speedY >= player.y &&
-    ball.y + ball.speedY <= player.y + player.height && hit
+    ball.y + ball.speedY <= player.y + player.height &&
+    hit
   ) {
     ball.speedX *= -1;
-   
   }
- 
-  animateId = requestAnimationFrame(animate)
-  gameOver()
+
+  animateId = requestAnimationFrame(animate);
+  gameOver();
 }
-animate()
+animate();
 
 function gameOver() {
   if (ball.x + ball.speedX > canvas.width + ball.r) {
-    increaseTimer = false
-    achievedTime.innerHTML = time
-    gameOverMessage.classList.add('active')
+    increaseTimer = false;
+    achievedTime.innerHTML = time;
+    gameOverMessage.classList.add("active");
     startBtn.classList.add("active");
     cancelAnimationFrame(animateId);
   }
 }
 
-
 startBtn.addEventListener("click", function () {
- location.reload()
+  location.reload();
 });
 
 document.addEventListener("pointermove", (e) => {
   e.preventDefault();
   mousePos = e.offsetY;
 });
-
